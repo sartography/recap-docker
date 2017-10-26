@@ -1,26 +1,77 @@
 USE `recap` ;
 
--- Script for Release 1.0.1 starts here
+-- Script for Release 1.1 starts here
 
-ALTER TABLE `recap`.`request_item_t` MODIFY EMAIL_ID VARCHAR(100);
+-- -----------------------------------------------------
+-- Table `BULK_CUSTOMER_CODE_T`
+-- -----------------------------------------------------
+CREATE TABLE `BULK_CUSTOMER_CODE_T` (
+  `BULK_CUSTOMER_CODE_ID`        INT             NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_CODE`                VARCHAR(45)     NOT NULL,
+  `DESCRIPTION`                  VARCHAR(2000)   NOT NULL,
+  `OWNING_INST_ID`	             INT             NULL,
+  PRIMARY KEY (`BULK_CUSTOMER_CODE_ID`),
+  UNIQUE KEY `BULK_CUSTOMER_CODE_UNIQUE` (`CUSTOMER_CODE`,`OWNING_INST_ID`),
+  INDEX (`CUSTOMER_CODE`),
+  INDEX (`OWNING_INST_ID`),
+  CONSTRAINT `BULK_CUST_CODE_OWNING_INST_ID_FK`
+  FOREIGN KEY (`OWNING_INST_ID`)
+  REFERENCES `INSTITUTION_T` (`INSTITUTION_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job purges the requests that end up with \'Exception\' status and are 365 days old. The number of days is configurable.' WHERE `JOB_NAME`='PurgeExceptionRequests';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job purges the patron email addresses entered in SCSB as part of requests. In case of physical requests, it will be purged 90 days after refile and in case of EDD, 60 days from the date of fulfillment. The number of days are configurable.' WHERE `JOB_NAME`='PurgeEmailAddress';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job initiates the ongoing matching algorithm process in SCSB. The processes are typically executed daily after the accession and submit collection processes are completed.' WHERE `JOB_NAME`='OngoingMatchingAlgorithm';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job reconciles the daily LAS transactions with SCSB.' WHERE `JOB_NAME`='DailyLASTransactionReconciliation';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job generates an ongoing accession report.' WHERE `JOB_NAME`='GenerateAccessionReport';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job initiates the batch ongoing accession process where barcodes that were accumulated throughout the day are processed.' WHERE `JOB_NAME`='Accession';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job runs all the accession process related jobs sequentially. Jobs that are included to run in the sequence are 1) Accession 2) Accession report 3) Submit Collection 4) Matching Algorithm 5) Incremental and Deleted Export.' WHERE `JOB_NAME`='AccessionToDataExportJobsInSequence';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job purges all the accessions which are in \'Complete\' status and are 30 days old. The number of days is configurable.' WHERE `JOB_NAME`='PurgeAccessionRequests';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job does periodic barcode reconciliation between SCSB and LAS.' WHERE `JOB_NAME`='PeriodicLASBarcodeReconciliation';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job captures any deletion of records in SCSB tables related to bibliographic, holdings, items and requests and an email notification is sent.' WHERE `JOB_NAME`='DeletedRecords';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job does a periodic status reconciliation between SCSB and LAS.' WHERE `JOB_NAME`='PeriodicLASItemStatusReconciliation';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job loads the initial request data in SCSB.' WHERE `JOB_NAME`='RequestInitialLoad';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job updates the bib, holdings and item information for the given barcode in MARC or SCSB XML format.' WHERE `JOB_NAME`='SubmitCollection';
-UPDATE `recap`.`job_t` SET `JOB_DESC`='The job runs the incremental and deleted records export job for each institution in sequence.' WHERE `JOB_NAME`='IncrementalAndDeletedExportJobInSequence';
-UPDATE `recap`.`job_t` SET `JOB_NAME`='PurgeCompletedAccessions' WHERE `JOB_NAME`='PurgeAccessionRequests';
+-- -----------------------------------------------------
+-- Table `BULK_REQUEST_ITEM_T `
+-- -----------------------------------------------------
+CREATE TABLE `BULK_REQUEST_ITEM_T` (
+  `BULK_REQUEST_ID`         INT           NOT NULL AUTO_INCREMENT,
+  `BULK_REQUEST_NAME`       VARCHAR(255)  NOT NULL,
+  `BULK_REQUEST_FILE_NAME`  VARCHAR(255)  NOT NULL,
+  `BULK_REQUEST_FILE_DATA`  LONGBLOB      NOT NULL,
+  `CREATED_BY`              VARCHAR(45)   NOT NULL,
+  `CREATED_DATE`            DATETIME      NOT NULL,
+  `LAST_UPDATED_DATE`       DATETIME      DEFAULT NULL,
+  `PATRON_ID`               VARCHAR(45)   NOT NULL,
+  `STOP_CODE`               VARCHAR(45)   NOT NULL,
+  `REQUESTING_INST_ID`      INT           NOT NULL,
+  `REQUEST_STATUS`          VARCHAR(45)   NOT NULL,
+  `NOTES`                   VARCHAR(2000) DEFAULT NULL,
+  `EMAIL_ID`                VARCHAR(45)   DEFAULT NULL,
+  PRIMARY KEY (`BULK_REQUEST_ID`),
+  KEY `BULK_REQUESTING_INST_ID_INDX` (`REQUESTING_INST_ID`),
+  CONSTRAINT `BULK_REQUESTING_INST_ID_FK`
+  FOREIGN KEY (`REQUESTING_INST_ID`)
+  REFERENCES `INSTITUTION_T` (`INSTITUTION_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+) ENGINE=InnoDB;
 
-INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`) VALUES (21,'CheckAndNotifyPendingRequest','Check And Notify Pending Request',NULL,NULL,NULL,NULL);
+-- -----------------------------------------------------
+-- Table `BULK_REQUEST_T `
+-- -----------------------------------------------------
+CREATE TABLE `BULK_REQUEST_T` (
+  `BULK_REQUEST_ID` INT NOT NULL,
+  `REQUEST_ID`      INT NOT NULL,
+  PRIMARY KEY (`BULK_REQUEST_ID`,`REQUEST_ID`),
+  KEY `REQUEST_ID_INTER_INDX` (`REQUEST_ID`),
+  CONSTRAINT `BULK_REQUEST_ID_INTER_FK`
+  FOREIGN KEY (`BULK_REQUEST_ID`)
+  REFERENCES `BULK_REQUEST_ITEM_T` (`BULK_REQUEST_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `REQUEST_ID_INTER_FK`
+  FOREIGN KEY (`REQUEST_ID`)
+  REFERENCES `REQUEST_ITEM_T` (`REQUEST_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+) ENGINE=InnoDB;
 
--- Script for Release 1.0.1 ends here
+INSERT INTO `recap`.`BULK_CUSTOMER_CODE_T` (`BULK_CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`) VALUES(1,'B1','CUL Bulk Request',2);
+INSERT INTO `recap`.`BULK_CUSTOMER_CODE_T` (`BULK_CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`) VALUES(2,'B2','NYPL Bulk request',3);
+INSERT INTO `recap`.`BULK_CUSTOMER_CODE_T` (`BULK_CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`) VALUES(3,'B3','PUL Bulk request',1);
+INSERT INTO `recap`.`BULK_CUSTOMER_CODE_T` (`BULK_CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`) VALUES(4,'G1','Columbia\'s Google code',2);
+INSERT INTO `recap`.`BULK_CUSTOMER_CODE_T` (`BULK_CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`) VALUES(5,'GO','NYPL\'s Google code',3);
+INSERT INTO `recap`.`BULK_CUSTOMER_CODE_T` (`BULK_CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`) VALUES(6,'G2','Princeton\'s Google Code',1);
 
+-- Script for Release 1.1 ends here
