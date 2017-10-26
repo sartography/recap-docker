@@ -10,7 +10,7 @@ PROJ_DIR_TAG=$PROJ_DIR$VAR_SLASH$PROJ_NAME;
 # echo $PROJ_DIR_TAG
 mkdir $PROJ_NAME
 cd $PROJ_DIR
-git clone https://github.com/rajeshbabuk/scsb-circ.git
+git clone https://github.com/ResearchCollectionsAndPreservation/scsb-circ.git
 # echo $PROJ_DIR_TAG
 cd $PROJ_DIR_TAG
 git checkout bulk-request
