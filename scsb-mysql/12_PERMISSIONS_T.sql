@@ -11,3 +11,4 @@ INSERT INTO `recap`.`PERMISSIONS_T` (`PERMISSION_ID`,`PERMISSION_NAME`,`PERMISSI
 INSERT INTO `recap`.`PERMISSIONS_T` (`PERMISSION_ID`,`PERMISSION_NAME`,`PERMISSION_DESCRIPTION`) VALUES (9,'Search (barcode number masked)','Barcode will be restricted for this role');
 INSERT INTO `recap`.`PERMISSIONS_T` (`PERMISSION_ID`,`PERMISSION_NAME`,`PERMISSION_DESCRIPTION`) VALUES (10,'Request Items','Ability to request items from any institution');
 INSERT INTO `recap`.`PERMISSIONS_T` (`PERMISSION_ID`,`PERMISSION_NAME`,`PERMISSION_DESCRIPTION`) VALUES (11,'Cancel all requests','Ability to cancel any request');
+INSERT INTO `recap`.`PERMISSIONS_T` (`PERMISSION_ID`,`PERMISSION_NAME`,`PERMISSION_DESCRIPTION`) VALUES (12,'Bulk Request','Ability to place bulk request');
