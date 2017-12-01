@@ -1,6 +1,6 @@
 USE `recap` ;
 
--- Script for Release 1.1.4 starts here
+-- Script for Release 1.1.5 starts here
 --MS-169 starts here
 UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ,OP,OB,OM' WHERE `CUSTOMER_CODE`='NA';
 UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ,OP,OB,OM' WHERE `CUSTOMER_CODE`='NB';
@@ -17,4 +17,4 @@ UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,
 UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ,OP,OB,OM' WHERE `CUSTOMER_CODE`='JS';
 UPDATE `recap`.`customer_code_t` SET `CUSTOMER_CODE` = 'OZ' WHERE `CUSTOMER_CODE`='OS';
 --MS-169 ends here
--- Script for Release 1.1.4 ends here
+-- Script for Release 1.1.5 ends here
