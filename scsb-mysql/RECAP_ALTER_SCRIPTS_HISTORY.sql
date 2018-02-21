@@ -1,4 +1,20 @@
-USE `recap` ;
+USE `recap`
+
+-- Script for Release 1.1.6 starts here
+
+--MS-176 starts here
+INSERT INTO `recap`.`ROLES_T` (`ROLE_ID`,`ROLE_NAME`,`ROLE_DESCRIPTION`,`CREATED_DATE`,`CREATED_BY`,`LAST_UPDATED_DATE`,`LAST_UPDATED_BY`) VALUES (7,'ReSubmit Request','ReSubmit Request',now(),'ReCAP',now(),'ReCAP');
+INSERT INTO `recap`.`PERMISSIONS_T` (`PERMISSION_ID`,`PERMISSION_NAME`,`PERMISSION_DESCRIPTION`) VALUES (13,'ReSubmit Request','Ability to ReSubmit Request');
+INSERT INTO `recap`.`ROLE_PERMISSION_T` (`ROLE_ID`,`PERMISSION_ID`) VALUES (7,13);
+--MS-176 ends here
+
+--MS-177 starts here
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NN,NK,NP,OP,NY',`PWD_DELIVERY_RESTRICTIONS`='NN,NK,NP,NY' WHERE `CUSTOMER_CODE`='NN';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NP,NC,NE,NK,NI,NV,NX,IN,OP,NY',`PWD_DELIVERY_RESTRICTIONS`='NP,NC,NE,NK,NI,NV,NX,NY' WHERE `CUSTOMER_CODE`='NP';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NU,NK,NO,OZ,NY',`PWD_DELIVERY_RESTRICTIONS`='NU,NK,NO,NY' WHERE `CUSTOMER_CODE`='NU';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NP,NC,NI,NK,NV,NY',`PWD_DELIVERY_RESTRICTIONS`='NP,NC,NI,NK,NV,NY' WHERE `CUSTOMER_CODE`='NV';
+--MS-177 ends here
+-- Script for Release 1.1.6 ends here
 
 -- Script for Release 1.1.5 starts here
 --MS-173 starts here
