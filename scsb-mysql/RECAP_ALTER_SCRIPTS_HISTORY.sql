@@ -1,5 +1,9 @@
 USE `recap`
 
+-- Script for Release 1.2.3 starts here
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NC,ND,NF,NG,NH,NI,NJ,NK,NM,NO,NR,NT,NX,NY,NZ,OZ,OA,OC,ON,OW',`PWD_DELIVERY_RESTRICTIONS`='NC,ND,NF,NG,NH,NI,NJ,NK,NM,NO,NR,NT,NX,NY,NZ,OZ,OA,OC,ON,OW',`RECAP_DELIVERY_RESTRICTIONS`='EDD,QP' WHERE `CUSTOMER_CODE`='NQ';
+-- Script for Release 1.2.3 ends here
+
 -- Script for Release 1.1.6 starts here
 
 --MS-176 starts here
