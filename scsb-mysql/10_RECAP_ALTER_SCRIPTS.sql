@@ -1,19 +1,7 @@
 USE `recap` ;
 
--- Script for Release 1.2.4 starts here
-CREATE TABLE IF NOT EXISTS `DEACCESSION_ITEM_CHANGE_LOG_T` (
-  `CHANGE_LOG_ID` 	INT 		        NOT NULL AUTO_INCREMENT,
-  `UPDATED_BY` 		      VARCHAR(45) 	  NULL,
-  `CREATED_DATE` 	      DATETIME 		    NULL,
-  `OPERATION_TYPE` 	    VARCHAR(200) 	  NULL,
-  `RECORD_ID` 		      INT 			      NULL,
-  `NOTES` 			        VARCHAR(2000) 	NULL,
-  PRIMARY KEY (`CHANGE_LOG_ID`),
-  INDEX (`UPDATED_BY`),
-  INDEX (`CREATED_DATE`),
-  INDEX (`OPERATION_TYPE`),
-  INDEX (`RECORD_ID`)
-)
-  ENGINE = InnoDB;
-
--- Script for Release 1.2.4 ends here
+-- Script for Release 1.2.5 starts here
+-- MS-223 starts here
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='BT,BZ,CS,MP,MZ,RS,RH',`PWD_DELIVERY_RESTRICTIONS`='BT,BZ,CS,MP,MZ,RS,RH' WHERE `CUSTOMER_CODE`='UA';
+-- MS-223 ends here
+-- Script for Release 1.2.5 ends here
