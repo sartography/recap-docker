@@ -1,17 +1,10 @@
 USE `recap` ;
 
--- Script for Release 1.2.8 Starts here
+-- Script for Release 1.2.9 start here
 
--- MS-228 Description changes - starts here
-UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='CR';
-UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='CU';
-UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='EV';
-UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='GC';
-UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='NA';
-UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='GP';
-UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='Firestone Library' WHERE `CUSTOMER_CODE`='PA';
-UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='QK';
+INSERT INTO `recap`.`request_item_status_t` (`REQUEST_STATUS_ID`, `REQUEST_STATUS_CODE`, `REQUEST_STATUS_DESC`) VALUES ('10', 'REQUESTS_PLACED_ON_SCH', 'REQUESTS PLACED ON SCH');
 
--- MS-228 Description changes ends here
+ALTER TABLE recap.request_item_t
+ADD COLUMN IS_GFA_STATUS_SCH TINYINT(1) NOT NULL DEFAULT 0;
 
--- Script for Release 1.2.8 Ends here
+-- Script for Release 1.2.9 ends
