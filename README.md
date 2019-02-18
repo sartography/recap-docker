@@ -1,5 +1,7 @@
 # Docker
 
+The SCSB Middleware codebase and components are all licensed under the Apache 2.0 license, with the exception of a set of API design components (JSF, JQuery, and Angular JS), which are licensed under MIT X11.
+
 [Docker](https://www.docker.com/why-docker) is an open-source software platform to create, deploy and manage virtualized application containers on a common operating system (OS). The SCSB(Shared Collections Service Bus) application runs with docker containers running up and dependent on each other. Each container provides a microservice project which are built as separate images. All the micro services which are used in SCSB applications are given under respective modules.
 
 ### Prerequisites
