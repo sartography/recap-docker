@@ -1,9 +1,15 @@
 FROM recapscsb/scsb-solr-base:latest
 MAINTAINER HTC ReCAP Support "recap-support@htcindia.com"
 
+# ARG repo_owner
+# ARG repo_name
+ARG repo_tag
+
 # Get files from GIT using tag
-ARG TAG
-ENV envTag="$TAG"
+ENV envTag="$repo_tag"
+
+# Install lsof
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq lsof < /dev/null > /dev/null
 
 # Create solr config directory
 RUN mkdir /opt/solr-config
