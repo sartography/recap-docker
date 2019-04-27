@@ -20,8 +20,3 @@ pwd
 
 ln -s $PROJ_DIR_TAG/build/libs/scsb-solr-client-0.0.1-SNAPSHOT.jar /etc/init.d/scsb-solr-client
 cp $PROJ_DIR_TAG/build/libs/scsb-solr-client-0.0.1-SNAPSHOT.jar /opt
-
-echo -e "\n\n\n----------------"
-ls -al /opt
-echo -e "----------------\n\n\n"
-
