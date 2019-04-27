@@ -10,7 +10,6 @@ COPY shellBuild.sh /opt/
 COPY wait-for-it.sh /opt/
 RUN cd /opt && ls -l && ./shellBuild.sh ${repo_owner} ${repo_name} ${repo_tag}
 
-ENTRYPOINT sleep 60 && \
-  /opt/wait-for-it.sh scsb:9093 -t 120 && \
+ENTRYPOINT /opt/wait-for-it.sh scsb:9093 -t 0 && \
   java -jar -Denvironment=$ENV /opt/scsb-shiro-0.0.1-SNAPSHOT.jar && \
   bash

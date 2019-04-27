@@ -10,7 +10,6 @@ COPY shellBuild.sh /opt/
 COPY wait-for-it.sh /opt/
 RUN cd /opt && ls -l && ./shellBuild.sh ${repo_owner} ${repo_name} ${repo_tag}
 
-ENTRYPOINT sleep 30 && \
-  /opt/wait-for-it.sh scsb-mysql:3306 && \
+ENTRYPOINT /opt/wait-for-it.sh scsb-mysql:3306 -t 0 && \
   java -jar -Denvironment=$ENV /opt/scsb-solr-client-0.0.1-SNAPSHOT.jar && \
   bash

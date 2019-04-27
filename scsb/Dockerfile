@@ -12,7 +12,6 @@ RUN cd /opt && ls -l && ./shellBuild.sh ${repo_owner} ${repo_name} ${repo_tag}
 
 EXPOSE 9093
 
-ENTRYPOINT sleep 45 && \
-  /opt/wait-for-it.sh scsb-solr-client:9090 -t 120 && \
+ENTRYPOINT /opt/wait-for-it.sh scsb-solr-client:9090 -t 0 && \
   java -jar -Denvironment=$ENV /opt/scsb-0.0.1-SNAPSHOT.jar && \
   bash
