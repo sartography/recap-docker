@@ -1,21 +1,20 @@
-
-
-echo "Parameter = $1"
-PROJ_NAME="scsb-ui"
-PROJ_DIR="/opt/scsb-ui"
+REPO_OWNER=$1
+REPO_NAME=$2
+REPO_TAG=$3
+REPO_URL="https://github.com/$REPO_OWNER/$REPO_NAME.git"
+PROJ_DIR="/opt/$REPO_NAME"
 PROJ_DIR_TAG=""
 VAR_SLASH="/"
-
-PROJ_DIR_TAG=$PROJ_DIR$VAR_SLASH$PROJ_NAME;
+PROJ_DIR_TAG=$PROJ_DIR$VAR_SLASH$REPO_NAME;
 
 # echo $PROJ_DIR_TAG
-mkdir $PROJ_NAME
+mkdir $REPO_NAME
 cd $PROJ_DIR
-git clone https://github.com/ResearchCollectionsAndPreservation/scsb-ui.git
+git clone $REPO_URL
 # echo $PROJ_DIR_TAG
 cd $PROJ_DIR_TAG
-if [ ! -z $1 ] ;then
-    git checkout tags/$1
+if [ ! -z $REPO_TAG ] ;then
+    git checkout tags/$REPO_TAG
 fi
 # ls -l
 pwd
